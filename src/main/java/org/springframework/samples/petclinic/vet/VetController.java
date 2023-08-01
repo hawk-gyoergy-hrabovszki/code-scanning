@@ -86,6 +86,12 @@ class VetController {
 		return lowerCase;
 	}
 
+	private String userPagination(int page) {
+		String model = addPaginationModel(0, null, null, 1);
+		String lowerCase = model.toLowerCase();
+		return lowerCase;
+	}
+
 	private String addPaginationModel(int page, Page<Vet> paginated, Model model, int size) {
 		List<Vet> listVets = paginated.getContent();
 		model.addAttribute("currentPage", page);
