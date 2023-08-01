@@ -75,6 +75,8 @@ class VetController {
 		vet.setLastName(name);
 		Vet saved = vetRepository.save(vet);
 		saved = null;
+		saved.setId(123);
+		saved.getSpecialties().add(null);
 		return null;
 	}
 
