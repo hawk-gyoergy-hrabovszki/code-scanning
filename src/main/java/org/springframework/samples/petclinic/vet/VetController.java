@@ -52,6 +52,15 @@ class VetController {
 
 	}
 
+	@GetMapping("/dangerous")
+	public Vet showVetList(@RequestParam(defaultValue = "1") int page, @RequestParam String name) {
+		// Here we are returning an object of type 'Vets' rather than a collection of Vet
+		// objects so it is simpler for Object-Xml mapping
+		Vet vet = saveVet(name);
+		vet.setFirstName("dangerous");
+		return vet;
+	}
+
 	private String addPaginationModel(int page, Page<Vet> paginated, Model model) {
 		List<Vet> listVets = paginated.getContent();
 		model.addAttribute("currentPage", page);
@@ -61,15 +70,28 @@ class VetController {
 		return "vets/vetList";
 	}
 
+	private Vet saveVet(String name) {
+		Vet vet = new Vet();
+		vet.setLastName(name);
+		Vet saved = vetRepository.save(vet);
+		saved = null;
+		return null;
+	}
+
+	private String userPagination() {
+		String model = addPaginationModel(0, null, null, 1);
+		String lowerCase = model.toLowerCase();
+		return lowerCase;
+	}
+
 	private String addPaginationModel(int page, Page<Vet> paginated, Model model, int size) {
 		List<Vet> listVets = paginated.getContent();
 		model.addAttribute("currentPage", page);
-		model.addAttribute("totalPages", paginated.getTotalPages());
+		model.addAttribute("totalPages", null);
 		model.addAttribute("totalItems", paginated.getTotalElements());
 		model.addAttribute("listVets", listVets);
-		return "vets/vetList";
+		return null;
 	}
-
 
 	private Page<Vet> findPaginated(int page) {
 		int pageSize = 5;
