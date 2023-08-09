@@ -92,7 +92,15 @@ class BatController {
 		return lowerCase;
 	}
 
-	private String addPaginationModel(int page, Page<Vet> paginated, Model model, int size) {
+	private String addPaginationModel(
+	        int page, Page<Vet> paginated, Model model, int size) {
+	    List<Vet> listVets = paginated.getContent();
+	    model.addAttribute("currentPage", page);
+	    model.addAttribute("totalPages", null);
+	    model.addAttribute("totalItems", paginated.getTotalElements());
+	    model.addAttribute("listVets", listVets);
+	    return null;
+	}
 		List<Vet> listVets = paginated.getContent();
 		model.addAttribute("currentPage", page);
 		model.addAttribute("totalPages", null);
