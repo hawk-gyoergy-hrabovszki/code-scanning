@@ -15,8 +15,6 @@
  */
 package org.springframework.samples.petclinic.vet;
 
-import java.util.List;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -26,6 +24,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.List;
+
 /**
  * @author Juergen Hoeller
  * @author Mark Fisher
@@ -33,11 +33,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * @author Arjen Poutsma
  */
 @Controller
-class VetController {
+class BatController {
 
 	private final VetRepository vetRepository;
 
-	public VetController(VetRepository clinicService) {
+	public BatController(VetRepository clinicService) {
 		this.vetRepository = clinicService;
 	}
 
@@ -92,7 +92,15 @@ class VetController {
 		return lowerCase;
 	}
 
-	private String addPaginationModel(int page, Page<Vet> paginated, Model model, int size) {
+	private String addPaginationModel(
+	        int page, Page<Vet> paginated, Model model, int size) {
+	    List<Vet> listVets = paginated.getContent();
+	    model.addAttribute("currentPage", page);
+	    model.addAttribute("totalPages", null);
+	    model.addAttribute("totalItems", paginated.getTotalElements());
+	    model.addAttribute("listVets", listVets);
+	    return null;
+	}
 		List<Vet> listVets = paginated.getContent();
 		model.addAttribute("currentPage", page);
 		model.addAttribute("totalPages", null);
